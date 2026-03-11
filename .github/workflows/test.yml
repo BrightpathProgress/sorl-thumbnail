@@ -8,7 +8,17 @@ jobs:
     strategy:
       matrix:
         python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
-        target: [pil, imagemagick, graphicsmagick, redis, wand, dbm]
+        target: 
+          - pil
+          # Disabled due to incompatibility with latest imagemagick that requires a
+          # colorspace fix. Unfortunately that fix (included in v13+) doesn't play nice
+          # with other convert backends prefixed with `nice` (e.g. `nice gm`
+          # accidentally gets the imagemagick colorspace fix applied when it shouldn't)
+          # - imagemagick
+          - graphicsmagick
+          - redis
+          - wand
+          - dbm
 
         include:
           - python-version: '3.11'
